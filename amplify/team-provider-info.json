@@ -1,0 +1,23 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-salesinventory-dev-152938-authRole",
+      "UnauthRoleArn": "arn:aws:iam::590183782048:role/amplify-salesinventory-dev-152938-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::590183782048:role/amplify-salesinventory-dev-152938-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-salesinventory-dev-152938-deployment",
+      "UnauthRoleName": "amplify-salesinventory-dev-152938-unauthRole",
+      "StackName": "amplify-salesinventory-dev-152938",
+      "StackId": "arn:aws:cloudformation:us-east-1:590183782048:stack/amplify-salesinventory-dev-152938/44bfe2d0-d28a-11ee-8d08-0ec8cf4ba937",
+      "AmplifyAppId": "d1oe1s4eqajuf4"
+    },
+    "categories": {
+      "api": {
+        "salesinventory": {}
+      },
+      "auth": {
+        "salesinventoryab8a036c": {}
+      }
+    }
+  }
+}
