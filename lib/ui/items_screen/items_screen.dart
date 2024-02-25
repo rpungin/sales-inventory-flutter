@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sale_inventory/models/Item.dart';
-import 'package:sale_inventory/services/amplify_persistance_service.dart';
+import 'package:sale_inventory/repository/amplify_repository.dart';
 import 'package:sale_inventory/ui/items_screen/item_row.dart';
 import 'package:sale_inventory/ui/items_screen/items_viewmodel.dart';
 
@@ -14,7 +14,7 @@ class ItemsScreen extends StatefulWidget {
 
 class _ItemsScreenState extends State<ItemsScreen> {
   final _itemsListViewModel = ItemsViewModel();
-  final _persistanceService = AmplifyPersistanceService();
+  final _repository = AmplifyRepository();
 
   @override
   void initState() {
@@ -59,7 +59,7 @@ class _ItemsScreenState extends State<ItemsScreen> {
                               ),
                             ),
                             onDismissed: (_) {
-                              _persistanceService.deleteItem(item);
+                              _repository.deleteItem(item);
                               _refreshItems();
                             },
                             child: ItemRow(
@@ -79,8 +79,8 @@ class _ItemsScreenState extends State<ItemsScreen> {
   }
 
   Future<void> _navigateToItem({Item? item}) async {
-    await context.pushNamed('manage', extra: item);
-    await _itemsListViewModel.load();
+    await context.pushNamed('manage-item', extra: item);
+    await _refreshItems();
   }
 
   Future<void> _refreshItems() async {

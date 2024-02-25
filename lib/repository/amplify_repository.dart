@@ -1,9 +1,9 @@
 import 'package:amplify_api/amplify_api.dart';
 import 'package:amplify_flutter/amplify_flutter.dart';
 import 'package:sale_inventory/models/Item.dart';
-import 'package:sale_inventory/services/persistance_service.dart';
+import 'package:sale_inventory/repository/repository.dart';
 
-class AmplifyPersistanceService implements PersistanceService {
+class AmplifyRepository implements Repository {
   @override
   Future<void> createItem(Item item) async {
     final request = ModelMutations.create(item);

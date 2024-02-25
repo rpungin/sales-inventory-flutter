@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sale_inventory/models/Item.dart';
-import 'package:sale_inventory/services/amplify_persistance_service.dart';
+import 'package:sale_inventory/repository/amplify_repository.dart';
 import 'package:sale_inventory/ui/items_screen/items_viewmodel.dart';
 
 class ManageItemScreen extends StatefulWidget {
@@ -27,7 +27,7 @@ class _ManageItemScreenState extends State<ManageItemScreen> {
   bool get _isCreate => _item == null;
   Item? get _item => widget.item;
 
-  final persistanceService = AmplifyPersistanceService();
+  final repository = AmplifyRepository();
 
   @override
   void initState() {
@@ -69,14 +69,14 @@ class _ManageItemScreenState extends State<ManageItemScreen> {
         currentQuantity: 10,
         price: amount,
       );
-      await persistanceService.createItem(newItem);
+      await repository.createItem(newItem);
     } else {
       final updatedItem = _item!.copyWith(
         name: title,
         description: description.isNotEmpty ? description : null,
         price: amount,
       );
-      await persistanceService.updateItem(updatedItem);
+      await repository.updateItem(updatedItem);
     }
 
     await ItemsViewModel().load();
