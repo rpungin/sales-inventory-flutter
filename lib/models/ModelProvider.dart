@@ -22,11 +22,11 @@
 import 'package:amplify_core/amplify_core.dart' as amplify_core;
 import 'Item.dart';
 
-//export 'Item.dart';
+export 'Item.dart';
 
 class ModelProvider implements amplify_core.ModelProviderInterface {
   @override
-  String version = "536db15ea8f4ef454ce23a86b0583e61";
+  String version = "7bf791bf1410724f022fda3a3442a97b";
   @override
   List<amplify_core.ModelSchema> modelSchemas = [Item.schema];
   @override

@@ -31,7 +31,7 @@ class Item extends amplify_core.Model {
   final String? _description;
   final double? _price;
   final int? _initialQuantity;
-  final int? _currentQuantity;
+  final int? _quantitySold;
   final amplify_core.TemporalDateTime? _createdAt;
   final amplify_core.TemporalDateTime? _updatedAt;
 
@@ -61,17 +61,8 @@ class Item extends amplify_core.Model {
     }
   }
   
-  String get description {
-    try {
-      return _description!;
-    } catch(e) {
-      throw amplify_core.AmplifyCodeGenModelException(
-          amplify_core.AmplifyExceptionMessages.codeGenRequiredFieldForceCastExceptionMessage,
-          recoverySuggestion:
-            amplify_core.AmplifyExceptionMessages.codeGenRequiredFieldForceCastRecoverySuggestion,
-          underlyingException: e.toString()
-          );
-    }
+  String? get description {
+    return _description;
   }
   
   double get price {
@@ -100,9 +91,9 @@ class Item extends amplify_core.Model {
     }
   }
   
-  int get currentQuantity {
+  int get quantitySold {
     try {
-      return _currentQuantity!;
+      return _quantitySold!;
     } catch(e) {
       throw amplify_core.AmplifyCodeGenModelException(
           amplify_core.AmplifyExceptionMessages.codeGenRequiredFieldForceCastExceptionMessage,
@@ -121,16 +112,16 @@ class Item extends amplify_core.Model {
     return _updatedAt;
   }
   
-  const Item._internal({required this.id, required name, required description, required price, required initialQuantity, required currentQuantity, createdAt, updatedAt}): _name = name, _description = description, _price = price, _initialQuantity = initialQuantity, _currentQuantity = currentQuantity, _createdAt = createdAt, _updatedAt = updatedAt;
+  const Item._internal({required this.id, required name, description, required price, required initialQuantity, required quantitySold, createdAt, updatedAt}): _name = name, _description = description, _price = price, _initialQuantity = initialQuantity, _quantitySold = quantitySold, _createdAt = createdAt, _updatedAt = updatedAt;
   
-  factory Item({String? id, required String name, required String description, required double price, required int initialQuantity, required int currentQuantity}) {
+  factory Item({String? id, required String name, String? description, required double price, required int initialQuantity, required int quantitySold}) {
     return Item._internal(
       id: id == null ? amplify_core.UUID.getUUID() : id,
       name: name,
       description: description,
       price: price,
       initialQuantity: initialQuantity,
-      currentQuantity: currentQuantity);
+      quantitySold: quantitySold);
   }
   
   bool equals(Object other) {
@@ -146,7 +137,7 @@ class Item extends amplify_core.Model {
       _description == other._description &&
       _price == other._price &&
       _initialQuantity == other._initialQuantity &&
-      _currentQuantity == other._currentQuantity;
+      _quantitySold == other._quantitySold;
   }
   
   @override
@@ -162,7 +153,7 @@ class Item extends amplify_core.Model {
     buffer.write("description=" + "$_description" + ", ");
     buffer.write("price=" + (_price != null ? _price.toString() : "null") + ", ");
     buffer.write("initialQuantity=" + (_initialQuantity != null ? _initialQuantity.toString() : "null") + ", ");
-    buffer.write("currentQuantity=" + (_currentQuantity != null ? _currentQuantity.toString() : "null") + ", ");
+    buffer.write("quantitySold=" + (_quantitySold != null ? _quantitySold.toString() : "null") + ", ");
     buffer.write("createdAt=" + (_createdAt != null ? _createdAt.format() : "null") + ", ");
     buffer.write("updatedAt=" + (_updatedAt != null ? _updatedAt.format() : "null"));
     buffer.write("}");
@@ -170,22 +161,22 @@ class Item extends amplify_core.Model {
     return buffer.toString();
   }
   
-  Item copyWith({String? name, String? description, double? price, int? initialQuantity, int? currentQuantity}) {
+  Item copyWith({String? name, String? description, double? price, int? initialQuantity, int? quantitySold}) {
     return Item._internal(
       id: id,
       name: name ?? this.name,
       description: description ?? this.description,
       price: price ?? this.price,
       initialQuantity: initialQuantity ?? this.initialQuantity,
-      currentQuantity: currentQuantity ?? this.currentQuantity);
+      quantitySold: quantitySold ?? this.quantitySold);
   }
   
   Item copyWithModelFieldValues({
     ModelFieldValue<String>? name,
-    ModelFieldValue<String>? description,
+    ModelFieldValue<String?>? description,
     ModelFieldValue<double>? price,
     ModelFieldValue<int>? initialQuantity,
-    ModelFieldValue<int>? currentQuantity
+    ModelFieldValue<int>? quantitySold
   }) {
     return Item._internal(
       id: id,
@@ -193,7 +184,7 @@ class Item extends amplify_core.Model {
       description: description == null ? this.description : description.value,
       price: price == null ? this.price : price.value,
       initialQuantity: initialQuantity == null ? this.initialQuantity : initialQuantity.value,
-      currentQuantity: currentQuantity == null ? this.currentQuantity : currentQuantity.value
+      quantitySold: quantitySold == null ? this.quantitySold : quantitySold.value
     );
   }
   
@@ -203,12 +194,12 @@ class Item extends amplify_core.Model {
       _description = json['description'],
       _price = (json['price'] as num?)?.toDouble(),
       _initialQuantity = (json['initialQuantity'] as num?)?.toInt(),
-      _currentQuantity = (json['currentQuantity'] as num?)?.toInt(),
+      _quantitySold = (json['quantitySold'] as num?)?.toInt(),
       _createdAt = json['createdAt'] != null ? amplify_core.TemporalDateTime.fromString(json['createdAt']) : null,
       _updatedAt = json['updatedAt'] != null ? amplify_core.TemporalDateTime.fromString(json['updatedAt']) : null;
   
   Map<String, dynamic> toJson() => {
-    'id': id, 'name': _name, 'description': _description, 'price': _price, 'initialQuantity': _initialQuantity, 'currentQuantity': _currentQuantity, 'createdAt': _createdAt?.format(), 'updatedAt': _updatedAt?.format()
+    'id': id, 'name': _name, 'description': _description, 'price': _price, 'initialQuantity': _initialQuantity, 'quantitySold': _quantitySold, 'createdAt': _createdAt?.format(), 'updatedAt': _updatedAt?.format()
   };
   
   Map<String, Object?> toMap() => {
@@ -217,7 +208,7 @@ class Item extends amplify_core.Model {
     'description': _description,
     'price': _price,
     'initialQuantity': _initialQuantity,
-    'currentQuantity': _currentQuantity,
+    'quantitySold': _quantitySold,
     'createdAt': _createdAt,
     'updatedAt': _updatedAt
   };
@@ -228,7 +219,7 @@ class Item extends amplify_core.Model {
   static final DESCRIPTION = amplify_core.QueryField(fieldName: "description");
   static final PRICE = amplify_core.QueryField(fieldName: "price");
   static final INITIALQUANTITY = amplify_core.QueryField(fieldName: "initialQuantity");
-  static final CURRENTQUANTITY = amplify_core.QueryField(fieldName: "currentQuantity");
+  static final QUANTITYSOLD = amplify_core.QueryField(fieldName: "quantitySold");
   static var schema = amplify_core.Model.defineSchema(define: (amplify_core.ModelSchemaDefinition modelSchemaDefinition) {
     modelSchemaDefinition.name = "Item";
     modelSchemaDefinition.pluralName = "Items";
@@ -257,7 +248,7 @@ class Item extends amplify_core.Model {
     
     modelSchemaDefinition.addField(amplify_core.ModelFieldDefinition.field(
       key: Item.DESCRIPTION,
-      isRequired: true,
+      isRequired: false,
       ofType: amplify_core.ModelFieldType(amplify_core.ModelFieldTypeEnum.string)
     ));
     
@@ -274,7 +265,7 @@ class Item extends amplify_core.Model {
     ));
     
     modelSchemaDefinition.addField(amplify_core.ModelFieldDefinition.field(
-      key: Item.CURRENTQUANTITY,
+      key: Item.QUANTITYSOLD,
       isRequired: true,
       ofType: amplify_core.ModelFieldType(amplify_core.ModelFieldTypeEnum.int)
     ));
