@@ -8,8 +8,7 @@ class Themes {
   static Color get colorPrimary =>
       isDarkTheme ? colorPrimaryDark : colorPrimaryLight;
 
-        static Color get colorAccent => const Color(0xFF1AA999);
-
+  static Color get colorAccent => const Color(0xFF1AA999);
 
   static Color get _colorBackgroundLight =>
       const Color.fromARGB(255, 230, 230, 230);
@@ -19,7 +18,7 @@ class Themes {
   static Color get colorBackgroundInverse =>
       isDarkTheme ? _colorBackgroundLight : _colorBackgroundDark;
 
-        static Color get colorTextLight => const Color(0xFFE8E8E8);
+  static Color get colorTextLight => const Color(0xFFE8E8E8);
   static Color get colorTextDark => colorPrimary;
   static Color get colorTextOnWidget => colorTextLight;
   static Color get colorTextOnBackground =>
@@ -103,16 +102,15 @@ class Themes {
   }
 
   static Decoration get topBarDecoration => BoxDecoration(
-          // borderRadius: const BorderRadius.only(
-          //     bottomLeft: Radius.circular(20),
-          //     bottomRight: Radius.circular(20)),
-          gradient: LinearGradient(
-        colors: [const Color.fromARGB(255, 141, 78, 33), Themes.colorPrimary],
+      borderRadius: const BorderRadius.only(
+          bottomLeft: Radius.circular(20), bottomRight: Radius.circular(20)),
+      gradient: LinearGradient(
+        colors: [Themes.colorPrimary, Themes.colorPrimary.withOpacity(0.7)],
         begin: Alignment.topCenter,
         end: Alignment.bottomCenter,
       ));
 
-        static Decoration get bottomBarDecoration => BoxDecoration(
+  static Decoration get bottomBarDecoration => BoxDecoration(
       gradient: LinearGradient(
           colors: [Themes.colorPrimary, Themes.colorPrimary.withOpacity(0.5)],
           begin: Alignment.topCenter,

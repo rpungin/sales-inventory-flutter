@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sale_inventory/ui/items_screen/items_screen.dart';
 import 'package:sale_inventory/ui/sale_events_screen/sale_events_screen.dart';
+import 'package:sale_inventory/ui/shared/styles.dart';
 import 'package:sale_inventory/ui/shared/themes.dart';
 
 class NavigationScreen extends StatefulWidget {
@@ -20,11 +21,20 @@ class _NavigationScreenState extends State<NavigationScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: _buildFloatingActionButton(context),
       appBar: AppBar(
-          title: Text(_getPageTitle(_selectedPageIndex)),
-          leading: _buildLeadingMenu(context),
-          actions: _buildAppBarActions(context)),
+        title: _buildPageTitle(context, _selectedPageIndex),
+        leading: _buildLeadingMenu(context),
+        actions: _buildAppBarActions(context),
+        backgroundColor: Colors.transparent,
+        flexibleSpace: Container(
+          decoration: Themes.topBarDecoration,
+        ),
+        iconTheme: IconThemeData(
+          color: Themes.colorTextLight,
+        ),
+        elevation: 6,
+      ),
+      floatingActionButton: _buildFloatingActionButton(context),
       bottomNavigationBar: _buildBottomNavigationBar(context),
       body: PageView(
         physics: const NeverScrollableScrollPhysics(),
@@ -37,6 +47,11 @@ class _NavigationScreenState extends State<NavigationScreen> {
         children: _buildPages(context),
       ),
     );
+  }
+
+  Widget _buildPageTitle(BuildContext context, int index) {
+    return Text(_getPageTitle(index),
+        style: Styles.textStyleLargeBoldOnWidget());
   }
 
   String _getPageTitle(int index) {
@@ -85,11 +100,10 @@ class _NavigationScreenState extends State<NavigationScreen> {
   List<BottomNavigationBarItem> _buildNavBarItems(BuildContext context) {
     final items = [
       BottomNavigationBarItem(
-          label: _getPageTitle(_itemsPageIndex),
-          icon: const Icon(Icons.shop_2)),
+          label: _getPageTitle(_itemsPageIndex), icon: const Icon(Icons.shop)),
       BottomNavigationBarItem(
           label: _getPageTitle(_saleEventsPageIndex),
-          icon: const Icon(Icons.money)),
+          icon: const Icon(Icons.calendar_month)),
     ];
 
     return items;

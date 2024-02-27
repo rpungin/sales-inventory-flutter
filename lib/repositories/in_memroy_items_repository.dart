@@ -28,4 +28,21 @@ class InMemoryItemsRepository implements ItemsRepository {
   Future<void> updateItem(ItemModel item) async {
     _dataMap[item.id] = item;
   }
+  
+  @override
+  Stream<ItemModel> onCreate() {
+    throw UnimplementedError();
+  }
+  
+  @override
+  Stream<ItemModel> onDelete() {
+    throw UnimplementedError();
+  }
+  
+  @override
+  Stream<ItemModel> onUpdate() {
+    throw UnimplementedError();
+  }
+
+
 }

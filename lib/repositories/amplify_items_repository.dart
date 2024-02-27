@@ -9,6 +9,7 @@ import 'package:sale_inventory/repositories/items_repository.dart';
 
 class AmplifyItemsRepository extends AmplifyRepository
     implements ItemsRepository {
+
   @override
   Future<void> createItem(ItemModel itemModel) async {
     final request = ModelMutations.create(_createItemFromItemModel(itemModel));
@@ -19,7 +20,8 @@ class AmplifyItemsRepository extends AmplifyRepository
   @override
   Future<void> updateItem(ItemModel itemModel) async {
     try {
-      final request = ModelMutations.update(_createItemFromItemModel(itemModel));
+      final request =
+          ModelMutations.update(_createItemFromItemModel(itemModel));
       final response = await Amplify.API.mutate(request: request).response;
       safePrint('Update result: $response');
     } on ApiException catch (e) {
@@ -46,32 +48,44 @@ class AmplifyItemsRepository extends AmplifyRepository
 
   @override
   Future<void> deleteItem(ItemModel itemModel) async {
-    final request = ModelMutations.delete<Item>(_createItemFromItemModel(itemModel));
+    final request =
+        ModelMutations.delete<Item>(_createItemFromItemModel(itemModel));
     final response = await Amplify.API.mutate(request: request).response;
     safePrint('Delete response: $response');
   }
 
-  StreamSubscription<GraphQLResponse<Item>>? subscription;
+  @override
+  Stream<ItemModel> onCreate() {
+    final Stream<GraphQLResponse<Item>> stream = Amplify.API.subscribe(
+      ModelSubscriptions.onCreate(Item.classType),
+      onEstablished: () => safePrint('onCreate Subscription established'),
+    );
+    return stream
+//    .where((event) => event.data != null)
+    .map((event) => _createItemModelFromItem(event.data!));
+  }
 
-void subscribe() {
-  final subscriptionRequest = ModelSubscriptions.onCreate(Item.classType);
-  final Stream<GraphQLResponse<Item>> operation = Amplify.API.subscribe(
-    subscriptionRequest,
-    onEstablished: () => safePrint('Subscription established'),
-  );
-  subscription = operation.listen(
-    (event) {
-      safePrint('Subscription event data received: ${event.data}');
-    },
-    onError: (Object e) => safePrint('Error in subscription stream: $e'),
-  );
-}
+    @override
+  Stream<ItemModel> onUpdate() {
+    final Stream<GraphQLResponse<Item>> stream = Amplify.API.subscribe(
+      ModelSubscriptions.onUpdate(Item.classType),
+      onEstablished: () => safePrint('onUpdate Subscription established'),
+    );
+    return stream
+//    .where((event) => event.data != null)
+    .map((event) => _createItemModelFromItem(event.data!));
+  }
 
-void unsubscribe() {
-  subscription?.cancel();
-  subscription = null;
-}
-
+    @override
+  Stream<ItemModel> onDelete() {
+    final Stream<GraphQLResponse<Item>> stream = Amplify.API.subscribe(
+      ModelSubscriptions.onDelete(Item.classType),
+      onEstablished: () => safePrint('onDelete Subscription established'),
+    );
+    return stream
+ //   .where((event) => event.data != null)
+    .map((event) => _createItemModelFromItem(event.data!));
+  }
 
   Item _createItemFromItemModel(ItemModel itemModel) => Item(
       id: itemModel.id,

@@ -100,7 +100,14 @@ class _ItemsScreenState extends ConsumerState<ItemsScreen> {
           children: [
             Row(
               children: [
-                const Spacer(),
+                Expanded(
+                    child: Padding(
+                  padding: const EdgeInsets.only(left: Styles.gridSpacing),
+                  child: Text(
+                    "Item",
+                    style: Styles.textStyleNormalBold(),
+                  ),
+                )),
                 Column(
                   children: [
                     Text(
