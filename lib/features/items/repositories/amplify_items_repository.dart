@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:amplify_api/amplify_api.dart';
 import 'package:amplify_flutter/amplify_flutter.dart';
 import 'package:sale_inventory/features/items/domain/item_model.dart';
-import 'package:sale_inventory/features/items/models/Item.dart';
+import 'package:sale_inventory/features/items/amplify_models/Item.dart';
 import 'package:sale_inventory/features/items/repositories/amplify_repository.dart';
 import 'package:sale_inventory/features/items/repositories/items_repository.dart';
 

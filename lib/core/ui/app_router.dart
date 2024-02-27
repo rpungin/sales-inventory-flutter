@@ -1,7 +1,7 @@
 import 'package:go_router/go_router.dart';
 import 'package:sale_inventory/features/items/domain/item_model.dart';
 import 'package:sale_inventory/features/items/ui/manage_item_screen/manage_item_screen.dart';
-import 'package:sale_inventory/features/items/ui/navigation_screen/navigation_screen.dart';
+import 'package:sale_inventory/core/ui/navigation_screen/navigation_screen.dart';
 
 class AppRouter {
   static final _routes = [

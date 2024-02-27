@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sale_inventory/features/items/ui/shared/styles.dart';
+import 'package:sale_inventory/core/ui/styles.dart';
 
 class Themes {
   static bool isDarkTheme = false;

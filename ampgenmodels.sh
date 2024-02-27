@@ -1,1 +1,1 @@
-amplify codegen models --output-dir lib/features/items/models
+amplify codegen models --output-dir lib/features/items/amplify_models

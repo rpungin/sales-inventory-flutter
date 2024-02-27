@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sale_inventory/features/items/ui/shared/themes.dart';
+import 'package:sale_inventory/core/ui/themes.dart';
 
 class Styles {
   static const double fontSizeSmall = 14;

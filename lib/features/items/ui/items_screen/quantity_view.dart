@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:sale_inventory/core/ui/button.dart';
+import 'package:sale_inventory/core/ui/styles.dart';
 import 'package:sale_inventory/features/items/domain/item_model.dart';
 import 'package:sale_inventory/features/items/ui/items_screen/item_row_viewmodel.dart';
 import 'package:sale_inventory/features/items/ui/items_screen/items_screen.dart';
-import 'package:sale_inventory/features/items/ui/shared/button.dart';
-import 'package:sale_inventory/features/items/ui/shared/styles.dart';
 
 class QuantityView extends StatelessWidget {
   final ItemRowViewModel itemRowViewModel;

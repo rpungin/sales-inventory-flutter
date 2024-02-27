@@ -151,11 +151,11 @@ class Item extends amplify_core.Model {
     buffer.write("id=" + "$id" + ", ");
     buffer.write("name=" + "$_name" + ", ");
     buffer.write("description=" + "$_description" + ", ");
-    buffer.write("price=" + (_price != null ? _price!.toString() : "null") + ", ");
-    buffer.write("initialQuantity=" + (_initialQuantity != null ? _initialQuantity!.toString() : "null") + ", ");
-    buffer.write("remainingQuantity=" + (_remainingQuantity != null ? _remainingQuantity!.toString() : "null") + ", ");
-    buffer.write("createdAt=" + (_createdAt != null ? _createdAt!.format() : "null") + ", ");
-    buffer.write("updatedAt=" + (_updatedAt != null ? _updatedAt!.format() : "null"));
+    buffer.write("price=" + (_price != null ? _price.toString() : "null") + ", ");
+    buffer.write("initialQuantity=" + (_initialQuantity != null ? _initialQuantity.toString() : "null") + ", ");
+    buffer.write("remainingQuantity=" + (_remainingQuantity != null ? _remainingQuantity.toString() : "null") + ", ");
+    buffer.write("createdAt=" + (_createdAt != null ? _createdAt.format() : "null") + ", ");
+    buffer.write("updatedAt=" + (_updatedAt != null ? _updatedAt.format() : "null"));
     buffer.write("}");
     
     return buffer.toString();

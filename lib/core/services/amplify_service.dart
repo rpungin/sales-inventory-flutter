@@ -1,8 +1,8 @@
 import 'package:amplify_api/amplify_api.dart';
 import 'package:amplify_auth_cognito/amplify_auth_cognito.dart';
 import 'package:amplify_flutter/amplify_flutter.dart';
-import 'package:sale_inventory/amplifyconfiguration.dart';
-import 'package:sale_inventory/features/items/models/ModelProvider.dart';
+import 'package:sale_inventory/core/services/amplifyconfiguration.dart';
+import 'package:sale_inventory/features/items/amplify_models/ModelProvider.dart';
 
 class AmplifyService {
   AmplifyService._internal();

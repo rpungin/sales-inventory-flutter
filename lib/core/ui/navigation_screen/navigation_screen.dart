@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:sale_inventory/core/ui/styles.dart';
+import 'package:sale_inventory/core/ui/themes.dart';
 import 'package:sale_inventory/features/items/ui/items_screen/items_screen.dart';
-import 'package:sale_inventory/features/items/ui/sale_events_screen/sale_events_screen.dart';
-import 'package:sale_inventory/features/items/ui/shared/styles.dart';
-import 'package:sale_inventory/features/items/ui/shared/themes.dart';
+import 'package:sale_inventory/features/sale_events/ui/sale_events_screen/sale_events_screen.dart';
 
 class NavigationScreen extends StatefulWidget {
   const NavigationScreen({super.key});

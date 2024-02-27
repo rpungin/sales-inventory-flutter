@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sale_inventory/core/ui/styles.dart';
 
 class SaleEventsScreen extends StatefulWidget {
   const SaleEventsScreen({Key? key}) : super(key: key);
@@ -10,6 +11,6 @@ class SaleEventsScreen extends StatefulWidget {
 class _SaleEventsScreenState extends State<SaleEventsScreen> {
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Center(child: Text("Sale Events", style: Styles.textStyleLargeBold(),));
   }
 }

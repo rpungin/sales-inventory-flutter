@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:sale_inventory/features/items/ui/shared/styles.dart';
-import 'package:sale_inventory/features/items/ui/shared/themes.dart';
+import 'package:sale_inventory/core/ui/styles.dart';
+import 'package:sale_inventory/core/ui/themes.dart';
+
 
 class Button extends StatelessWidget {
   final String? text;

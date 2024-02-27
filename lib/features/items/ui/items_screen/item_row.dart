@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:sale_inventory/core/ui/styles.dart';
+import 'package:sale_inventory/features/items/domain/item_model.dart';
 import 'package:sale_inventory/main.dart';
 import 'package:sale_inventory/features/items/ui/items_screen/item_row_viewmodel.dart';
 import 'package:sale_inventory/features/items/ui/items_screen/quantity_view.dart';
-import 'package:sale_inventory/features/items/ui/shared/styles.dart';
 
-import '../../domain/item_model.dart';
 
 final itemRowViewModelProvider = Provider.family<ItemRowViewModel, ItemModel>(
     (ref, item) => ItemRowViewModel(item, ref.read(itemsRepositoryProvider)));

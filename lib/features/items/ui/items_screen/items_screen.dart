@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:sale_inventory/core/ui/styles.dart';
 import 'package:sale_inventory/features/items/domain/item_model.dart';
 import 'package:sale_inventory/main.dart';
 import 'package:sale_inventory/features/items/repositories/amplify_items_repository.dart';
 import 'package:sale_inventory/features/items/repositories/items_repository.dart';
 import 'package:sale_inventory/features/items/ui/items_screen/item_row.dart';
 import 'package:sale_inventory/features/items/ui/items_screen/items_viewmodel.dart';
-import 'package:sale_inventory/features/items/ui/shared/styles.dart';
 
 class ItemsScreen extends ConsumerStatefulWidget {
   static const quantityWidth = 50.0;
