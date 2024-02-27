@@ -1,10 +1,10 @@
 import 'package:amplify_authenticator/amplify_authenticator.dart';
 import 'package:flutter/material.dart';
-import 'package:sale_inventory/repositories/amplify_items_repository.dart';
-import 'package:sale_inventory/repositories/items_repository.dart';
-import 'package:sale_inventory/services/amplify_service.dart';
-import 'package:sale_inventory/ui/items_screen/items_viewmodel.dart';
-import 'package:sale_inventory/ui/shared/app_router.dart';
+import 'package:sale_inventory/core/ui/app_router.dart';
+import 'package:sale_inventory/features/items/repositories/amplify_items_repository.dart';
+import 'package:sale_inventory/features/items/repositories/items_repository.dart';
+import 'package:sale_inventory/core/services/amplify_service.dart';
+import 'package:sale_inventory/features/items/ui/items_screen/items_viewmodel.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 // Dependency Injection
