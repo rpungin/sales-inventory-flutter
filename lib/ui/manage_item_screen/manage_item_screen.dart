@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sale_inventory/domain/item_model.dart';
-import 'package:sale_inventory/repositories/amplify_items_repository.dart';
+import 'package:sale_inventory/main.dart';
+import 'package:sale_inventory/repositories/items_repository.dart';
 import 'package:sale_inventory/ui/items_screen/items_viewmodel.dart';
 
-class ManageItemScreen extends StatefulWidget {
+class ManageItemScreen extends ConsumerStatefulWidget {
   const ManageItemScreen({
     required this.item,
     super.key,
@@ -13,10 +15,10 @@ class ManageItemScreen extends StatefulWidget {
   final ItemModel? item;
 
   @override
-  State<ManageItemScreen> createState() => _ManageItemScreenState();
+  ConsumerState<ManageItemScreen> createState() => _ManageItemScreenState();
 }
 
-class _ManageItemScreenState extends State<ManageItemScreen> {
+class _ManageItemScreenState extends ConsumerState<ManageItemScreen> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
@@ -28,11 +30,13 @@ class _ManageItemScreenState extends State<ManageItemScreen> {
   bool get _isCreate => _item == null;
   ItemModel? get _item => widget.item;
 
-  final repository = AmplifyItemsRepository();
-
+  late final ItemsRepository _repository;
+  late final ItemsViewModel _itemsViewModel;
   @override
   void initState() {
-    super.initState();
+    
+    _repository = ref.read(itemsRepositoryProvider);
+    _itemsViewModel = ref.read(itemsViewModelProvider);
 
     final item = _item;
     if (item != null) {
@@ -44,6 +48,7 @@ class _ManageItemScreenState extends State<ManageItemScreen> {
     } else {
       _titleText = 'Create Item';
     }
+    super.initState();
   }
 
   @override
@@ -75,6 +80,7 @@ class _ManageItemScreenState extends State<ManageItemScreen> {
                   children: [
                     TextFormField(
                       controller: _nameController,
+                      textCapitalization: TextCapitalization.words,
                       decoration: const InputDecoration(
                         labelText: 'Name (required)',
                       ),
@@ -87,6 +93,7 @@ class _ManageItemScreenState extends State<ManageItemScreen> {
                     ),
                     TextFormField(
                       controller: _descriptionController,
+                      textCapitalization: TextCapitalization.sentences,
                       decoration: const InputDecoration(
                         labelText: 'Description',
                       ),
@@ -157,14 +164,14 @@ class _ManageItemScreenState extends State<ManageItemScreen> {
     final initialQuantity = int.parse(_quantityController.text);
     if (_isCreate) {
       final newItem = ItemModel(
-        id: repository.createNewId(),
+        id: _repository.createNewId(),
         name: title,
         description: description.isNotEmpty ? description : "",
         initialQuantity: initialQuantity,
-        quantitySold: 0,
+        remainingQuantity: initialQuantity,
         price: price,
       );
-      await repository.createItem(newItem);
+      await _repository.createItem(newItem);
     } else {
       final updatedItem = _item!.copyWith(
         name: title,
@@ -172,10 +179,10 @@ class _ManageItemScreenState extends State<ManageItemScreen> {
         initialQuantity: initialQuantity,
         price: price,
       );
-      await repository.updateItem(updatedItem);
+      await _repository.updateItem(updatedItem);
     }
 
-    await ItemsViewModel().load();
+    await _itemsViewModel.load();
     if (mounted) {
       context.pop();
     }

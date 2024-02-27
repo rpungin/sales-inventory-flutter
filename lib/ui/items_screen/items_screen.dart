@@ -1,26 +1,32 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
+
 import 'package:sale_inventory/domain/item_model.dart';
+import 'package:sale_inventory/main.dart';
 import 'package:sale_inventory/repositories/amplify_items_repository.dart';
+import 'package:sale_inventory/repositories/items_repository.dart';
 import 'package:sale_inventory/ui/items_screen/item_row.dart';
 import 'package:sale_inventory/ui/items_screen/items_viewmodel.dart';
 import 'package:sale_inventory/ui/shared/styles.dart';
 
-class ItemsScreen extends StatefulWidget {
+class ItemsScreen extends ConsumerStatefulWidget {
   static const quantityWidth = 50.0;
   const ItemsScreen({Key? key}) : super(key: key);
 
   @override
-  State<ItemsScreen> createState() => _ItemsScreenState();
+  ConsumerState<ItemsScreen> createState() => _ItemsScreenState();
 }
 
-class _ItemsScreenState extends State<ItemsScreen> {
-  final _itemsListViewModel = ItemsViewModel();
-  final _repository = AmplifyItemsRepository();
+class _ItemsScreenState extends ConsumerState<ItemsScreen> {
+  late final ItemsViewModel _itemsViewModel;
+  final ItemsRepository _repository = AmplifyItemsRepository();
 
   @override
   void initState() {
-    _itemsListViewModel.load();
+    _itemsViewModel = ref.read(itemsViewModelProvider);
+    _itemsViewModel.load();
     super.initState();
   }
 
@@ -32,7 +38,7 @@ class _ItemsScreenState extends State<ItemsScreen> {
         child: RefreshIndicator(
           onRefresh: _refreshItems,
           child: ValueListenableBuilder<List<ItemModel>>(
-              valueListenable: _itemsListViewModel.itemsValueNotifier,
+              valueListenable: _itemsViewModel.itemsValueNotifier,
               builder: (context, items, _) {
                 return Column(
                   children: [
@@ -42,27 +48,30 @@ class _ItemsScreenState extends State<ItemsScreen> {
                         itemCount: items.length,
                         itemBuilder: (context, index) {
                           final item = items[index];
-                          return Dismissible(
-                            direction: DismissDirection.endToStart,
-                            key: ValueKey(item),
-                            background: const ColoredBox(
-                              color: Colors.red,
-                              child: Padding(
-                                padding: EdgeInsets.only(right: 10),
-                                child: Align(
-                                  alignment: Alignment.centerRight,
-                                  child:
-                                      Icon(Icons.delete, color: Colors.white),
-                                ),
-                              ),
+                          return Slidable(
+                            endActionPane: ActionPane(
+                              motion: const ScrollMotion(),
+                              extentRatio: 0.5,
+                              children: [
+                                SlidableAction(
+                                    label: "Edit",
+                                    backgroundColor: Colors.green,
+                                    icon: Icons.edit,
+                                    onPressed: (context) async {
+                                      _navigateToItem(item);
+                                    }),
+                                SlidableAction(
+                                    label: "Delete",
+                                    backgroundColor: Colors.red,
+                                    icon: Icons.delete,
+                                    onPressed: (context) async {
+                                      _deleteItem(item);
+                                    }),
+                              ],
                             ),
-                            onDismissed: (_) {
-                              _repository.deleteItem(item);
-                              _refreshItems();
-                            },
                             child: ItemRow(
+                              key: UniqueKey(),
                               item: item,
-                              onTap: () => _navigateToItem(item: item),
                             ),
                           );
                         },
@@ -85,30 +94,33 @@ class _ItemsScreenState extends State<ItemsScreen> {
     }
     return Padding(
       padding: const EdgeInsets.all(Styles.gridSpacing),
-      child: Column(
-        children: [
-          Row(
-            children: [
-              const Spacer(),
-              Column(
-                children: [
-                  Text(
-                    "Quantity",
-                    style: Styles.textStyleNormalBold(),
-                  ),
-                  Row(
-                    children: [
-                      _buildQuantityHeaderText(context, "Orig."),
-                      _buildQuantityHeaderText(context, "Sold"),
-                      _buildQuantityHeaderText(context, "Rem."),
-                    ],
-                  )
-                ],
-              )
-            ],
-          ),
-          const Divider()
-        ],
+      child: Padding(
+        padding: const EdgeInsets.only(right: Styles.gridSpacing * 2),
+        child: Column(
+          children: [
+            Row(
+              children: [
+                const Spacer(),
+                Column(
+                  children: [
+                    Text(
+                      "Quantity",
+                      style: Styles.textStyleNormalBold(),
+                    ),
+                    Row(
+                      children: [
+                        _buildQuantityHeaderText(context, "Orig."),
+                        _buildQuantityHeaderText(context, "Sold"),
+                        _buildQuantityHeaderText(context, "Rem."),
+                      ],
+                    )
+                  ],
+                )
+              ],
+            ),
+            const Divider()
+          ],
+        ),
       ),
     );
   }
@@ -124,11 +136,16 @@ class _ItemsScreenState extends State<ItemsScreen> {
     );
   }
 
-  Future<void> _navigateToItem({ItemModel? item}) async {
+  Future<void> _navigateToItem(ItemModel? item) async {
     await context.pushNamed('manage-item', extra: item);
   }
 
+  Future<void> _deleteItem(ItemModel item) async {
+    _repository.deleteItem(item);
+    _refreshItems();
+  }
+
   Future<void> _refreshItems() async {
-    await _itemsListViewModel.load();
+    await _itemsViewModel.load();
   }
 }

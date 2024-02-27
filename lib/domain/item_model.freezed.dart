@@ -21,7 +21,7 @@ mixin _$ItemModel {
   String? get description => throw _privateConstructorUsedError;
   double get price => throw _privateConstructorUsedError;
   int get initialQuantity => throw _privateConstructorUsedError;
-  int get quantitySold => throw _privateConstructorUsedError;
+  int get remainingQuantity => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $ItemModelCopyWith<ItemModel> get copyWith =>
@@ -39,7 +39,7 @@ abstract class $ItemModelCopyWith<$Res> {
       String? description,
       double price,
       int initialQuantity,
-      int quantitySold});
+      int remainingQuantity});
 }
 
 /// @nodoc
@@ -60,7 +60,7 @@ class _$ItemModelCopyWithImpl<$Res, $Val extends ItemModel>
     Object? description = freezed,
     Object? price = null,
     Object? initialQuantity = null,
-    Object? quantitySold = null,
+    Object? remainingQuantity = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -83,9 +83,9 @@ class _$ItemModelCopyWithImpl<$Res, $Val extends ItemModel>
           ? _value.initialQuantity
           : initialQuantity // ignore: cast_nullable_to_non_nullable
               as int,
-      quantitySold: null == quantitySold
-          ? _value.quantitySold
-          : quantitySold // ignore: cast_nullable_to_non_nullable
+      remainingQuantity: null == remainingQuantity
+          ? _value.remainingQuantity
+          : remainingQuantity // ignore: cast_nullable_to_non_nullable
               as int,
     ) as $Val);
   }
@@ -105,7 +105,7 @@ abstract class _$$ItemModelImplCopyWith<$Res>
       String? description,
       double price,
       int initialQuantity,
-      int quantitySold});
+      int remainingQuantity});
 }
 
 /// @nodoc
@@ -124,7 +124,7 @@ class __$$ItemModelImplCopyWithImpl<$Res>
     Object? description = freezed,
     Object? price = null,
     Object? initialQuantity = null,
-    Object? quantitySold = null,
+    Object? remainingQuantity = null,
   }) {
     return _then(_$ItemModelImpl(
       id: null == id
@@ -147,9 +147,9 @@ class __$$ItemModelImplCopyWithImpl<$Res>
           ? _value.initialQuantity
           : initialQuantity // ignore: cast_nullable_to_non_nullable
               as int,
-      quantitySold: null == quantitySold
-          ? _value.quantitySold
-          : quantitySold // ignore: cast_nullable_to_non_nullable
+      remainingQuantity: null == remainingQuantity
+          ? _value.remainingQuantity
+          : remainingQuantity // ignore: cast_nullable_to_non_nullable
               as int,
     ));
   }
@@ -164,10 +164,8 @@ class _$ItemModelImpl extends _ItemModel {
       required this.description,
       required this.price,
       required this.initialQuantity,
-      required this.quantitySold})
-      : assert(price >= 0, 'price must be greater than or equal to zero.'),
-        assert(initialQuantity >= 0, 'initialQuantity must be greater than 0'),
-        super._();
+      required this.remainingQuantity})
+      : super._();
 
   @override
   final String id;
@@ -180,11 +178,11 @@ class _$ItemModelImpl extends _ItemModel {
   @override
   final int initialQuantity;
   @override
-  final int quantitySold;
+  final int remainingQuantity;
 
   @override
   String toString() {
-    return 'ItemModel(id: $id, name: $name, description: $description, price: $price, initialQuantity: $initialQuantity, quantitySold: $quantitySold)';
+    return 'ItemModel(id: $id, name: $name, description: $description, price: $price, initialQuantity: $initialQuantity, remainingQuantity: $remainingQuantity)';
   }
 
   @override
@@ -199,13 +197,13 @@ class _$ItemModelImpl extends _ItemModel {
             (identical(other.price, price) || other.price == price) &&
             (identical(other.initialQuantity, initialQuantity) ||
                 other.initialQuantity == initialQuantity) &&
-            (identical(other.quantitySold, quantitySold) ||
-                other.quantitySold == quantitySold));
+            (identical(other.remainingQuantity, remainingQuantity) ||
+                other.remainingQuantity == remainingQuantity));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType, id, name, description, price, initialQuantity, quantitySold);
+  int get hashCode => Object.hash(runtimeType, id, name, description, price,
+      initialQuantity, remainingQuantity);
 
   @JsonKey(ignore: true)
   @override
@@ -221,7 +219,7 @@ abstract class _ItemModel extends ItemModel {
       required final String? description,
       required final double price,
       required final int initialQuantity,
-      required final int quantitySold}) = _$ItemModelImpl;
+      required final int remainingQuantity}) = _$ItemModelImpl;
   const _ItemModel._() : super._();
 
   @override
@@ -235,7 +233,7 @@ abstract class _ItemModel extends ItemModel {
   @override
   int get initialQuantity;
   @override
-  int get quantitySold;
+  int get remainingQuantity;
   @override
   @JsonKey(ignore: true)
   _$$ItemModelImplCopyWith<_$ItemModelImpl> get copyWith =>

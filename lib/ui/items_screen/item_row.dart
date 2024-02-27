@@ -1,57 +1,70 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sale_inventory/domain/item_model.dart';
-import 'package:sale_inventory/ui/items_screen/items_screen.dart';
+import 'package:sale_inventory/main.dart';
+import 'package:sale_inventory/ui/items_screen/item_row_viewmodel.dart';
+import 'package:sale_inventory/ui/items_screen/quantity_view.dart';
 import 'package:sale_inventory/ui/shared/styles.dart';
 
-class ItemRow extends StatelessWidget {
+final itemRowViewModelProvider = Provider.family<ItemRowViewModel, ItemModel>(
+    (ref, item) => ItemRowViewModel(item, ref.read(itemsRepositoryProvider)));
+
+class ItemRow extends ConsumerStatefulWidget {
   final ItemModel item;
-  final VoidCallback onTap;
-  const ItemRow({super.key, required this.item, required this.onTap});
+   const ItemRow({
+    super.key,
+    required this.item,
+  });
+
+  @override
+  ConsumerState<ItemRow> createState() => _ItemRowState();
+}
+
+class _ItemRowState extends ConsumerState<ItemRow> {
+  late final ItemRowViewModel _itemRowViewModel;
+
+  @override
+  void initState() {
+    _itemRowViewModel = ref.read(itemRowViewModelProvider(widget.item));
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
-    final textColor = item.remainingQuantity == 0 ? Colors.red : null;
     return Card(
-      child: InkWell(
-        onTap: onTap,
-        child: Padding(
-          padding: const EdgeInsets.all(Styles.gridSpacing),
-          child: Row(
-            children: [
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      item.name,
-                      style: Styles.textStyleLargeBold()
-                          .copyWith(color: textColor),
+      child: Padding(
+        padding: const EdgeInsets.all(Styles.gridSpacing),
+        child: ValueListenableBuilder<ItemModel>(
+            valueListenable: _itemRowViewModel.itemValueNotifier,
+            builder: (context, item, _) {
+              final textColor =
+                  item.remainingQuantity == 0 ? Colors.red.shade500 : null;
+              return Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          item.name,
+                          style: Styles.textStyleLargeBold()
+                              .copyWith(color: textColor),
+                        ),
+                        Text(item.description ?? "",
+                            style: Styles.textStyleNormal()
+                                .copyWith(color: textColor))
+                      ],
                     ),
-                    Text(item.description ?? "",
-                        style:
-                            Styles.textStyleNormal().copyWith(color: textColor))
-                  ],
-                ),
-              ),
-              Row(children: [
-                _buildQuantityView(context, item.initialQuantity, textColor),
-                _buildQuantityView(context, item.quantitySold, textColor),
-                _buildQuantityView(context, item.remainingQuantity, textColor),
-              ]),
-            ],
-          ),
-        ),
+                  ),
+                  QuantityView(
+                    itemRowViewModel: _itemRowViewModel,
+                    textColor: textColor,
+                  )
+                ],
+              );
+            }),
       ),
-    );
-  }
-
-  Widget _buildQuantityView(
-      BuildContext context, int quantity, MaterialColor? textColor) {
-    return SizedBox(
-      width: ItemsScreen.quantityWidth,
-      child: Text(quantity.toString(),
-          style: Styles.textStyleLargeBold().copyWith(color: textColor),
-          textAlign: TextAlign.right),
     );
   }
 }

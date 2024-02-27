@@ -109,7 +109,11 @@ class _NavigationScreenState extends State<NavigationScreen> {
         onPressed: () async {
           await context.pushNamed("manage-item");
         },
-        child: const Icon(Icons.add),
+        backgroundColor: Themes.colorPrimary,
+        child: const Icon(
+          Icons.add,
+          color: Colors.white,
+        ),
       );
     }
     return null;

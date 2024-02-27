@@ -16,5 +16,5 @@ type Item @model @auth(rules: [{ allow: owner }]){
   description: String
   price: Float!
   initialQuantity: Int!
-  quantitySold: Int!
+  remainingQuantity: Int!
 }

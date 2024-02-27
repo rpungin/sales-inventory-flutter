@@ -38,7 +38,7 @@ class Styles {
 
   static TextStyle textStyleLarge() =>
       textStyleSmall().copyWith(fontSize: fontSizeLarge);
-      
+
   static TextStyle textStyleLargeBold() =>
       textStyleLarge().copyWith(fontWeight: FontWeight.bold);
 
@@ -54,4 +54,32 @@ class Styles {
   static const BorderRadius borderRadiusAll =
       BorderRadius.all(Radius.circular(Styles.cornerRadius));
   static const double buttonHeight = 40;
+
+  static BorderRadius buttonsBorderRadius(BuildContext context) =>
+      BorderRadius.circular(Theme.of(context).buttonTheme.height / 2);
+
+  static ButtonStyle buttonStyle(BuildContext context) => ButtonStyle(
+        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+          RoundedRectangleBorder(
+            side: BorderSide(color: Themes.colorTextOnWidget),
+            borderRadius: buttonsBorderRadius(context),
+          ),
+        ),
+        backgroundColor: MaterialStateProperty.all<Color>(Themes.colorPrimary),
+        textStyle: MaterialStateProperty.all<TextStyle>(
+            Styles.textStyleSmallBoldOnWidget()),
+      );
+
+  static ButtonStyle buttonStyleDisabled(BuildContext context) => ButtonStyle(
+        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+          RoundedRectangleBorder(
+            side: BorderSide(color: Themes.colorTextOnWidget),
+            borderRadius:
+                BorderRadius.circular(Theme.of(context).buttonTheme.height / 2),
+          ),
+        ),
+        backgroundColor: MaterialStateProperty.all<Color>(Colors.grey),
+        textStyle: MaterialStateProperty.all<TextStyle>(
+            Styles.textStyleSmallBoldOnWidget()),
+      );
 }
